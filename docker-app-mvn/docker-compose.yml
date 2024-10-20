@@ -1,0 +1,29 @@
+version: '3'
+services:
+  frontend:
+    build: ./front-end-app
+    ports:
+      - "8081:80"  # Esponi il frontend su localhost:8081
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend-service-1
+    ports:
+      - "8080:8080"  # Esponi il backend su localhost:8080
+      - "5005:5005"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+
+networks:
+  app-network:
+    driver: bridge      

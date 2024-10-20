@@ -1,0 +1,15 @@
+version: '3'
+services:
+  frontend:
+    build: ./frontend-angular-app
+    ports:
+      - "8081:80"  # Esponi il frontend su localhost:8081
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend-service
+    ports:
+      - "8080:8080"  # Esponi il backend su localhost:8080
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
